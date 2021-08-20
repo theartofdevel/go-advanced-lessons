@@ -13,3 +13,8 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+/.DS_Store
+/rest-api-tutorial/.idea
+/rest-api-tutorial/logs
+/rest-api-tutorial/build
+/rest-api-tutorial/.DS_Store
