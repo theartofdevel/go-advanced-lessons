@@ -1,3 +1,13 @@
+GET http://localhost:1234/users/123
+Content-Type: application/json
+
+###
+
+GET http://localhost:1234/users
+Content-Type: application/json
+
+###
+
 POST http://localhost:1234/users
 Content-Type: application/json
 

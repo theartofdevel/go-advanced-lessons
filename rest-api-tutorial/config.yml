@@ -2,7 +2,8 @@
 
 is_debug: true
 listen:
-  type: sock
+  type: port
+  port: 1234
 mongodb:
   host: localhost
   port: 27017
