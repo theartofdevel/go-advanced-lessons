@@ -14,21 +14,12 @@ import (
 	"time"
 )
 
-
 func main() {
 	logger := logging.GetLogger()
 	logger.Info("create router")
 	router := httprouter.New()
 
 	cfg := config.GetConfig()
-
-	//cfgMongo := cfg.MongoDB
-	//mongoDBClient, err := mongodb.NewClient(context.Background(), cfgMongo.Host, cfgMongo.Port, cfgMongo.Username,
-	//	cfgMongo.Password, cfgMongo.Database, cfgMongo.AuthDB)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//storage := db.NewStorage(mongoDBClient, cfg.MongoDB.Collection, logger)
 
 	logger.Info("register user handler")
 	handler := user.NewHandler(logger)
@@ -67,9 +58,9 @@ func start(router *httprouter.Router, cfg *config.Config) {
 	}
 
 	server := &http.Server{
-		Handler: router,
+		Handler:      router,
 		WriteTimeout: 15 * time.Second,
-		ReadTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
 	}
 
 	logger.Fatal(server.Serve(listener))

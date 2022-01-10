@@ -10,7 +10,7 @@ import (
 )
 
 type writerHook struct {
-	Writer []io.Writer
+	Writer    []io.Writer
 	LogLevels []logrus.Level
 }
 
@@ -68,7 +68,7 @@ func init() {
 	l.SetOutput(io.Discard)
 
 	l.AddHook(&writerHook{
-		Writer: []io.Writer{allFile, os.Stdout},
+		Writer:    []io.Writer{allFile, os.Stdout},
 		LogLevels: logrus.AllLevels,
 	})
 
