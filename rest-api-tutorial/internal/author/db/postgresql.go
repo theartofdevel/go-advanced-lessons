@@ -2,6 +2,7 @@ package author
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/jackc/pgconn"
 	"restapi-lesson/internal/author"
@@ -22,14 +23,16 @@ func formatQuery(q string) string {
 func (r *repository) Create(ctx context.Context, author *author.Author) error {
 	q := `
 		INSERT INTO author 
-		    (name) 
+		    (name, age) 
 		VALUES 
-		       ($1) 
+		       ($1, $2) 
 		RETURNING id
 	`
 	r.logger.Trace(fmt.Sprintf("SQL Query: %s", formatQuery(q)))
-	if err := r.client.QueryRow(ctx, q, author.Name).Scan(&author.ID); err != nil {
-		if pgErr, ok := err.(*pgconn.PgError); ok {
+	if err := r.client.QueryRow(ctx, q, author.Name, 123).Scan(&author.ID); err != nil {
+		var pgErr *pgconn.PgError
+		if errors.As(err, &pgErr) {
+			pgErr = err.(*pgconn.PgError)
 			newErr := fmt.Errorf(fmt.Sprintf("SQL Error: %s, Detail: %s, Where: %s, Code: %s, SQLState: %s", pgErr.Message, pgErr.Detail, pgErr.Where, pgErr.Code, pgErr.SQLState()))
 			r.logger.Error(newErr)
 			return newErr
