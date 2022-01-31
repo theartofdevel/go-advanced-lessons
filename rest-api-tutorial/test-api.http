@@ -1,67 +1,17 @@
-###
-
-GET http://localhost:1234/authors
+### Get author list with filter
+#################################?field=lt/gt/lte/gte/eq:value
+GET http://localhost:1234/authors?age=lt:50&name=автор&is_alive=true&sort_by=age&sort_order=asc
 Content-Type: application/json
 
-###
-
-GET http://localhost:1234/users/123
+### Get author page 1
+GET http://localhost:1234/authors?limit=5
 Content-Type: application/json
 
-###
-
-GET http://localhost:1234/users
+### Get author page 2
+GET http://localhost:1234/authors?limit=5&ptoken=?
 Content-Type: application/json
 
-###
-
-POST http://localhost:1234/users
+### Get author list with sorting
+#################################sort_by=field&sort_order=asc/desc
+GET http://localhost:1234/authors?sort_by=age&sort_order=desc
 Content-Type: application/json
-
-{}
-
-> {%
-client.test("Request executed successfully", function() {
-  client.assert(response.status === 201, "Response status is not 201");
-});
-%}
-
-###
-
-PUT http://localhost:1234/users/1
-Content-Type: application/json
-
-{}
-
-> {%
-client.test("Request executed successfully", function() {
-  client.assert(response.status === 204, "Response status is not 204");
-});
-%}
-
-###
-
-PATCH http://localhost:1234/users/1
-Content-Type: application/json
-
-{}
-
-> {%
-client.test("Request executed successfully", function() {
-  client.assert(response.status === 204, "Response status is not 204");
-});
-%}
-
-###
-
-DELETE http://localhost:1234/users/1
-Content-Type: application/json
-
-{}
-
-> {%
-client.test("Request executed successfully", function() {
-  client.assert(response.status === 204, "Response status is not 204");
-});
-%}
-

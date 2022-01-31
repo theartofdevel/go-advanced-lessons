@@ -9,8 +9,9 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	author2 "restapi-lesson/internal/author"
-	author "restapi-lesson/internal/author/db"
+	"restapi-lesson/internal/author"
+	authorDB "restapi-lesson/internal/author/db/postgresql"
+	"restapi-lesson/internal/author/service"
 	"restapi-lesson/internal/config"
 	"restapi-lesson/pkg/client/postgresql"
 	"restapi-lesson/pkg/logging"
@@ -28,17 +29,9 @@ func main() {
 	if err != nil {
 		logger.Fatalf("%v", err)
 	}
-	repository := author.NewRepository(postgreSQLClient, logger)
-	a := author2.Author{
-		Name: "OK",
-	}
-	err = repository.Create(context.TODO(), &a)
-	if err != nil {
-		logger.Fatal(err)
-	}
-
-	logger.Info("register author handler")
-	authorHandler := author2.NewHandler(repository, logger)
+	repository := authorDB.NewRepository(postgreSQLClient, logger)
+	authorService := service.NewService(repository, logger)
+	authorHandler := author.NewHandler(authorService, logger)
 	authorHandler.Register(router)
 
 	start(router, cfg)

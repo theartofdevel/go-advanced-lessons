@@ -1,10 +1,12 @@
 package book
 
-import "restapi-lesson/internal/author"
+import (
+	"restapi-lesson/internal/author/model"
+)
 
 type Book struct {
-	ID      string          `json:"id"`
-	Name    string          `json:"name"`
-	Age     int             `json:"age"`
-	Authors []author.Author `json:"authors"`
+	ID      string         `json:"id"`
+	Name    string         `json:"name"`
+	Age     int            `json:"age"`
+	Authors []model.Author `json:"authors"`
 }
